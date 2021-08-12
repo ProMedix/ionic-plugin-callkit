@@ -93,7 +93,7 @@
             providerDelegate?.reportIncomingCall(uuid,handle: name,hasVideo: hasVideo,supportsGroup: supportsGroup, supportsUngroup: supportsUngroup,supportsDTMF: supportsDTMF, supportsHold: supportsHold)
         } else {
             // iOS 9: if the application is in background, show a notification
-            if (UIApplication.shared.applicationState == UIApplicationState.background) {
+            if (UIApplication.shared.applicationState == UIApplication.State.background) {
                 let localNotification = UILocalNotification()
                 localNotification.fireDate = NSDate(timeIntervalSinceNow: 1) as Date
                 localNotification.alertBody = name

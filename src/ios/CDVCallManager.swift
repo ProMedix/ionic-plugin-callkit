@@ -57,7 +57,7 @@ final class CDVCallManager: NSObject {
     fileprivate(set) var calls = [CDVCall]()
     
     func callWithUUID(_ uuid: UUID) -> CDVCall? {
-        guard let index = calls.index(where: { $0.uuid == uuid }) else {
+        guard let index = calls.firstIndex(where: { $0.uuid == uuid }) else {
             return nil
         }
         return calls[index]
