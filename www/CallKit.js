@@ -1,11 +1,11 @@
 var exec = cordova.require('cordova/exec');
 
 var CallKit = function() {
-	console.log('CallKit instanced');
+	console.log('CallKit instantiated');
 };
 
 CallKit.prototype.register = function(callChanged,audioSystem) {
-	var errorCallback = function() {};
+	var errorCallback = function(error) {console.error(error)};
 	var successCallback = function(obj) {
 		if (obj && obj.hasOwnProperty('callbackType')) {
 			if (obj.callbackType == "callChanged") {
@@ -39,7 +39,7 @@ CallKit.prototype.reportIncomingCall = function(name,params,onSuccess) {
 		supportsHold = (params.hold === true);
 	}
 
-	var errorCallback = function() {};
+	var errorCallback = function(error) {console.error(error)};
 	var successCallback = function(obj) {
 		onSuccess(obj);
 	};
@@ -54,7 +54,7 @@ CallKit.prototype.askNotificationPermission = function() {
 };
 
 CallKit.prototype.startCall = function(name,isVideo,onSuccess) {
-	var errorCallback = function() {};
+	var errorCallback = function(error) {console.error(error)};
 	var successCallback = function(obj) {
 		onSuccess(obj);
 	};
@@ -63,24 +63,17 @@ CallKit.prototype.startCall = function(name,isVideo,onSuccess) {
 };
 
 CallKit.prototype.callConnected = function(uuid) {
-	var errorCallback = function() {};
+	var errorCallback = function(error) {console.error(error)};
 	var successCallback = function() {};
 
 	exec(successCallback, errorCallback, 'CallKit', 'callConnected', [uuid] );
 };
 
 CallKit.prototype.endCall = function(uuid,notify) {
-	var errorCallback = function() {};
+	var errorCallback = function(error) {console.error(error)};
 	var successCallback = function() {};
 
 	exec(successCallback, errorCallback, 'CallKit', 'endCall', [uuid, notify] );
-};
-
-CallKit.prototype.finishRing = function(uuid) {
-	var errorCallback = function() {};
-	var successCallback = function() {};
-
-	exec(successCallback, errorCallback, 'CallKit', 'finishRing', [uuid] );
 };
 
 if (typeof module != 'undefined' && module.exports) {
