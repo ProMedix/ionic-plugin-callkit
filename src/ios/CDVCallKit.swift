@@ -44,6 +44,7 @@
     }
 
     @available(iOS 10.0, *)
+    @objc(register:)
     func register(_ command:CDVInvokedUrlCommand) {
         self.commandDelegate.run(inBackground: {
             var pluginResult = CDVPluginResult(
@@ -74,7 +75,8 @@
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-
+    
+    @objc(reportIncomingCall:)
     func reportIncomingCall(_ command:CDVInvokedUrlCommand) {
         var pluginResult = CDVPluginResult(
             status : CDVCommandStatus_ERROR
@@ -112,12 +114,14 @@
             callbackId: command.callbackId
         )
     }
-
+    
+    @objc(askNotificationPermission:)
     func askNotificationPermission(_ command:CDVInvokedUrlCommand) {
         UIApplication.shared.registerUserNotificationSettings(UIUserNotificationSettings(types: [.alert], categories: nil))
     }
 
     @available(iOS 10.0, *)
+    @objc(startCall:)
     func startCall(_ command:CDVInvokedUrlCommand) {
         var pluginResult = CDVPluginResult(
             status : CDVCommandStatus_ERROR
@@ -140,21 +144,9 @@
             callbackId: command.callbackId
         )
     }
-
-    func finishRing(_ command:CDVInvokedUrlCommand) {
-        let pluginResult = CDVPluginResult(
-            status : CDVCommandStatus_OK
-        )
-
-        pluginResult?.setKeepCallbackAs(false)
-        self.commandDelegate!.send(
-            pluginResult,
-            callbackId: command.callbackId
-        )
-        /* does nothing on iOS */
-    }
-
+    
     @available(iOS 10.0, *)
+    @objc(endCall:)
     func endCall(_ command:CDVInvokedUrlCommand) {
         self.commandDelegate.run(inBackground: {
             let uuid = UUID(uuidString: command.arguments[0] as? String ?? "")
@@ -170,6 +162,7 @@
     }
 
     @available(iOS 10.0, *)
+    @objc(callConnected:)
     func callConnected(_ command:CDVInvokedUrlCommand) {
         self.commandDelegate.run(inBackground: {
             let uuid = UUID(uuidString: command.arguments[0] as? String ?? "")
